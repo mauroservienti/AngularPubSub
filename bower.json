@@ -12,5 +12,15 @@
   "dependencies": {
     "angular": "~1.5.0",
     "bootstrap": "~3.3.6"
+  },
+  "exportsOverride": {
+    "bootstrap": {
+      "js": "dist/js/*.*",
+      "css": "dist/css/*.*",
+      "fonts": "dist/fonts/*.*"
+    },
+    "jquery": {
+      "js": "dist/jquery.{js,min.js,min.map}"
+    }
   }
 }
