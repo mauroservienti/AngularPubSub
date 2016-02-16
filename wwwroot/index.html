@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 
 <html ng-app="app">
+
 <head>
     <meta charset="utf-8" />
     <title>Pub/Sub Sample</title>
@@ -13,6 +14,7 @@
     <link href="/lib/bootstrap/css/bootstrap.css" rel="stylesheet" />
     <link href="/assets/site.css" rel="stylesheet" />
 </head>
+
 <body>
 
     <div class="navbar navbar-default navbar-fixed-top">
@@ -33,7 +35,103 @@
         </div>
     </div>
     <div class="container body-content">
-body
+        <div class="panel panel-default" ng-controller="newChatsController as vm">
+            <div class="panel-body">
+                <div class="input-group">
+                    <input type="text" class="form-control" placeholder="Chat name..." ng-model="vm.newChatName">
+                    <span class="input-group-btn">
+                                        <button class="btn btn-default" ng-click="vm.createNew()">Create new chat</button>
+                    </span>
+                </div>
+                <div>
+                    <span class="label label-{{vm.messageSeverity}}">Result: {{vm.message}}</span>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-5">
+                <div class="panel panel-default" ng-controller="chatsController as vm">
+                    <div class="panel-heading">
+                        <h3 class="panel-title">Chats</h3>
+                    </div>
+                    <div class="panel-body">
+                        <div ng-repeat="chat in vm.chats">
+
+                            <div class="panel panel-default">
+                                <div class="panel-heading">
+                                    <h3 class="panel-title">{{chat.name}}</h3>
+                                </div>
+                                <div class="panel-body">
+
+                                    <div ng-repeat="msg in chat.messages">
+                                        <span ng-show="msg.direction === 'out'"><i>You</i></span>
+                                        <span ng-show="msg.direction === 'in'">They</span> said: {{msg.text}}
+                                    </div>
+
+                                    <div class="input-group">
+                                        <input type="text" class="form-control" placeholder="Message..." ng-model="chat.newMessage">
+                                        <span class="input-group-btn">
+                                            <button class="btn btn-default" ng-click="chat.sendMessage()">Send message</button>
+                                        </span>
+                                    </div>
+                                </div>
+                                <div class="panel-footer">
+                                    <button class="btn btn-default" ng-click="chat.close()">Close</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-2">
+                <div class="panel panel-default" ng-controller="availableChatsController as vm">
+                    <div class="panel-heading">
+                        <h3 class="panel-title">Available chats</h3>
+                    </div>
+                    <div class="panel-body">
+                        <div ng-repeat="chat in vm.chats">
+                            {{chat.name}}
+                            <button class="btn btn-default" ng-hide="chat.isConnected" ng-click="chat.connect()">Connect</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-5">
+                <div class="panel panel-default" ng-controller="connectedChatsController as vm">
+                    <div class="panel-heading">
+                        <h3 class="panel-title">Connected chats</h3>
+                    </div>
+                    <div class="panel-body">
+
+                        <div ng-repeat="chat in vm.chats">
+
+                            <div class="panel panel-default">
+                                <div class="panel-heading">
+                                    <h3 class="panel-title">{{chat.name}}</h3>
+                                </div>
+                                <div class="panel-body">
+
+                                    <div ng-repeat="msg in chat.messages">
+                                        <span ng-show="msg.direction === 'out'"><i>You</i></span>
+                                        <span ng-show="msg.direction === 'in'">They</span> said: {{msg.text}}
+                                    </div>
+
+                                    <div class="input-group">
+                                        <input type="text" class="form-control" placeholder="Message..." ng-model="chat.newMessage">
+                                        <span class="input-group-btn">
+                                            <button class="btn btn-default" ng-click="chat.sendMessage()">Send message</button>
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    </div>
     </div>
     <div class="navbar navbar-default navbar-fixed-bottom">
 
@@ -46,4 +144,5 @@ body
     <script src="/app/templates.js" type="text/javascript"></script>
     <script src="/app/app.js" type="text/javascript"></script>
 </body>
+
 </html>
